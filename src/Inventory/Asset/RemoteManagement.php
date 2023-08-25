@@ -54,6 +54,7 @@ class RemoteManagement extends InventoryAsset
 
         $mapping = [
             'id'      => 'remoteid',
+            'url'      => 'remoteurl',
         ];
 
         foreach ($this->data as &$val) {
@@ -82,7 +83,7 @@ class RemoteManagement extends InventoryAsset
         $db_existing = [];
 
         $iterator = $DB->request([
-            'SELECT' => ['id', 'remoteid', 'type', 'is_dynamic'],
+            'SELECT' => ['id', 'remoteid', 'type', 'remoteurl', 'is_dynamic'],
             'FROM'   => Item_RemoteManagement::getTable(),
             'WHERE'  => [
                 'itemtype' => $this->item->getType(),

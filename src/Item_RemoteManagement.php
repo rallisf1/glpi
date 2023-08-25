@@ -43,6 +43,7 @@ class Item_RemoteManagement extends CommonDBChild
     public const LITEMANAGER = 'litemanager';
     public const ANYDESK = 'anydesk';
     public const MESHCENTRAL = 'meshcentral';
+    public const CUSTOM = 'custom';
     public const SUPREMO = 'supremo';
     public const RUSTDESK = 'rustdesk';
 
@@ -209,6 +210,7 @@ class Item_RemoteManagement extends CommonDBChild
     {
         $link = '<a href="%s" target="_blank">%s</a>';
         $id = Html::entities_deep($this->fields['remoteid']);
+        $url = Html::entities_deep($this->fields['remoteurl']);
         $href = null;
         switch ($this->fields['type']) {
             case self::TEAMVIEWER:
@@ -222,6 +224,12 @@ class Item_RemoteManagement extends CommonDBChild
                 break;
             case self::RUSTDESK:
                 $href = "rustdesk://$id";
+                break;
+            case self::MESHCENTRAL:
+                $href = "https://$url/?viewmode=10&gotonode=$id";
+                break;
+            case self::CUSTOM:
+                $href = $url . $id;
                 break;
         }
 
@@ -350,6 +358,8 @@ class Item_RemoteManagement extends CommonDBChild
             echo __('No');
         }
         echo "</td>";
+        echo "<td>&nbsp;</td>";
+        echo "<td>&nbsp;</td>";
         echo "</tr>\n";
 
         echo "<tr class='tab_bg_1'>";
@@ -362,6 +372,7 @@ class Item_RemoteManagement extends CommonDBChild
             self::LITEMANAGER => 'LiteManager',
             self::ANYDESK => 'AnyDesk',
             self::MESHCENTRAL => 'MeshCentral',
+            self::CUSTOM => 'MeshCentral',
             self::SUPREMO => 'SupRemo',
             self::RUSTDESK => 'RustDesk',
         ];
@@ -374,6 +385,14 @@ class Item_RemoteManagement extends CommonDBChild
                 'display' => false
             ]
         );
+        echo "</td>";
+        echo "<td>" . __('Remote URL') . "</td>";
+        echo "<td>";
+        if(in_array($this->fields['type'], [self::MESHCENTRAL, self::CUSTOM])) {
+            echo Html::input('remoteurl', ['value' => $this->fields['remoteurl']]);
+        } else {
+            echo Html::input('remoteurl', ['value' => '', 'readonly' => true]);
+        }
         echo "</td></tr>";
 
         $itemtype = $this->fields['itemtype'];
