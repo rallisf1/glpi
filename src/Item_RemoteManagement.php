@@ -372,7 +372,7 @@ class Item_RemoteManagement extends CommonDBChild
             self::LITEMANAGER => 'LiteManager',
             self::ANYDESK => 'AnyDesk',
             self::MESHCENTRAL => 'MeshCentral',
-            self::CUSTOM => 'MeshCentral',
+            self::CUSTOM => 'Custom',
             self::SUPREMO => 'SupRemo',
             self::RUSTDESK => 'RustDesk',
         ];
